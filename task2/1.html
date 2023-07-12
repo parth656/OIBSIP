@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+<body>
+  <div class="box">
+    <h1>Todo App</h1>
+    <input type="text" id="titleInput" placeholder="Enter a title">
+    <input type="text" id="taskInput" placeholder="Enter a task">
+    <button onclick="addTask()">Add Task</button>
+    <div id="taskList"></div>
+  </div>
+
+  <script>
+    function addTask(){
+      const titleInput = document.getElementById('titleInput');
+      const taskInput = document.getElementById('taskInput');
+      const title = titleInput.value.trim();
+      const task = taskInput.value.trim();
+      if (title !== '' && task !== '') {
+        const timestamp = new Date().toLocaleString();
+        tasks.push({ title: title, task: task, timestamp: timestamp });
+        displayTasks();
+        titleInput.value = '';
+        taskInput.value = '';
+      }
+    }
+    function editTask(index){
+      const task = tasks[index];
+      const titleInput = document.getElementById('titleInput');
+      const taskInput = document.getElementById('taskInput');
+      titleInput.value = task.title;
+      taskInput.value = task.task;
+      tasks.splice(index, 1);
+      displayTasks();
+
+    }
+    function deleteTask(index){
+      tasks.splice(index, 1);
+      displayTasks();
+    }
+
+    function displayTasks(){
+      const taskList = document.getElementById('taskList');
+      taskList.innerHTML = '';
+      for (let i = 0; i < tasks.length; i++) {
+        const task = tasks[i];
+        const taskElement = document.createElement('div');
+        taskElement.innerHTML = `
+          <h3>${task.title}</h3>
+          <p>${task.task}</p>
+          <p>${task.timestamp}</p>
+          <button onclick="editTask(${i})">Edit</button>
+          <button onclick="deleteTask(${i})">Delete</button>
+        `;
+        taskList.appendChild(taskElement);
+      }
+    }
+
+
+    const tasks = [
+      
+       
+    ];
+  </script>
+</body>
+</html>

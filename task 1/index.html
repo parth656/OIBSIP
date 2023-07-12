@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>🧮Animated Calculator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .calculator {
+      width: 300px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      animation: scale-in 0.5s ease-out forwards;
+    }
+
+    .screen {
+      padding: 10px;
+      background-color: #eee;
+      text-align: right;
+      font-size: 20px;
+      color: #333;
+      height: 60px;
+    }
+
+    .history {
+      padding: 10px;
+      background-color: #f9f9f9;
+      text-align: right;
+      font-size: 12px;
+      color: #777;
+      height: 40px;
+    }
+
+    .button-row {
+      display: flex;
+    }
+
+    .button {
+      flex: 1;
+      padding: 20px;
+      font-size: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #ddd;
+    }
+
+    .orange {
+      background-color: #ff8c00;
+      color: #fff;
+    }
+
+    .orange:hover {
+      background-color: #ff9800;
+    }
+
+    @keyframes scale-in {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="history"></div>
+    <div class="screen"></div>
+    <div class="button-row">
+      <div class="button">(</div>
+      <div class="button">)</div>
+      <div class="button">%</div>
+      <div class="button">AC</div>
+    </div>
+    <div class="button-row">
+      <div class="button">7</div>
+      <div class="button">8</div>
+      <div class="button">9</div>
+      <div class="button">/</div>
+    </div>
+    <div class="button-row">
+      <div class="button">4</div>
+      <div class="button">5</div>
+      <div class="button">6</div>
+      <div class="button">*</div>
+    </div>
+    <div class="button-row">
+      <div class="button">1</div>
+      <div class="button">2</div>
+      <div class="button">3</div>
+      <div class="button">+</div>
+    </div>
+    <div class="button-row">
+      <div class="button">0</div>
+      <div class="button">.</div>
+      <div class="button">-</div>
+      <div class="button orange">=</div>
+    </div>
+  </div>
+
+  <script>
+    const screen = document.querySelector('.screen');
+    const history = document.querySelector('.history');
+    const buttons = document.querySelectorAll('.button');
+    let calculation = '';
+  
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        handleButtonClick(button.textContent);
+      });
+    });
+  
+    document.addEventListener('keydown', event => {
+      const key = event.key;
+      if (key === 'Enter') {
+        handleButtonClick('=');
+      } else if (key === 'Escape') {
+        handleButtonClick('AC');
+      } else if (key === 'Backspace') {
+        calculation = calculation.slice(0, -1);
+        screen.textContent = calculation;
+      } else if (key === '(' || key === ')') {
+        handleButtonClick(key);
+      } else if (/[\d.+\-*/%]/.test(key)) {
+        handleButtonClick(key);
+      }
+    });
+  
+    function handleButtonClick(buttonText) {
+      if (buttonText === 'AC') {
+        calculation = '';
+        screen.textContent = '';
+        history.textContent = '';
+      } else if (buttonText === '=') {
+        try {
+          const result = eval(calculation);
+          history.textContent = calculation + ' =';
+          screen.textContent = result;
+          calculation = result.toString();
+        } catch (error) {
+          screen.textContent = 'Error';
+        }
+      } else {
+        calculation += buttonText;
+        screen.textContent = calculation;
+      }
+    }
+  </script>
+  
+</body>
+</html>

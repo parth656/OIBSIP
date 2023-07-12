@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Todo App</h1>
+        <input type="text" id="titleInput" placeholder="Enter a title">
+        <input type="text" id="taskInput" placeholder="Enter a task">
+        <button onclick="addTask()">Add Task</button>
+        <div id="taskList"></div>
+      </div>
+    
+
+      <script>
+
+        function addTask()=>{
+            const titleInput = document.getElementById('titleInput');
+            const taskInput = document.getElementById('taskInput');
+            const title = titleInput.value.trim();
+            const task = taskInput.value.trim();
+            if (title !== '' && task !== '') {
+              const timestamp = new Date().toLocaleString();
+              tasks.push({ title: title, task: task, timestamp: timestamp });
+              displayTasks();
+              titleInput.value = '';
+              taskInput.value = '';
+            }
+        }
+      </script>
+
+</body>
+</html>
